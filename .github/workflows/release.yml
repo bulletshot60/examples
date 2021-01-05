@@ -17,9 +17,9 @@ jobs:
           for dir in */ 
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
-            ls $dir/*/ >/dev/null 2>&1 ; 
+            subdircount=$(find "$dir" -maxdepth 1 -type d | wc -l)
 
-            if [ $? == 0 ]; 
+            if [[ "$subdircount" -eq 1 ]]
             then
               cd "$dir"
               for subdir in */ 

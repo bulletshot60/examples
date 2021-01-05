@@ -17,10 +17,12 @@ jobs:
           for dir in */ 
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
-            for subdir in $dir/*/ 
+            cd "$dir"
+            for subdir in */ 
             do
-              zip -r "./zips/${dir%/}-${subdir%/}.zip" "$dir/$subdir"
-            done
+              zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"    
+            done  
+            cd ..
           done
           rm zips/zips.zip
       - name: Create Release

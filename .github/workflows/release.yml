@@ -17,17 +17,15 @@ jobs:
           for dir in */ 
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
-            subdircount=$(find "$dir" -maxdepth 1 -type d | wc -l)
             cd "$dir"
 
-            echo "there are $subdircount subdirectories to compress"
-            if [[ "$subdircount" -eq 1 ]]
-            then
-              for subdir in */ 
-              do
-                zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"    
-              done
-            fi
+            for subdir in */ 
+            do
+              if [[ "$subdir" -neq "*" ]]
+              then
+                zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"
+              fi
+            done
 
             cd ..
           done

@@ -13,6 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: |
+          shopt -s extglob
           mkdir zips
           for dir in **/ 
           do

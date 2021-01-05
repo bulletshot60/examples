@@ -18,15 +18,16 @@ jobs:
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
             subdircount=$(find "$dir" -maxdepth 1 -type d | wc -l)
+            cd "$dir"
 
             if [[ "$subdircount" -eq 1 ]]
             then
-              cd "$dir"
               for subdir in */ 
               do
                 zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"    
               done
             fi
+            
             cd ..
           done
           rm zips/zips.zip

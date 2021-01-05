@@ -17,11 +17,16 @@ jobs:
           for dir in */ 
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
-            cd "$dir"
-            for subdir in */ 
-            do
-              zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"    
-            done  
+            ls $dir/*/ >/dev/null 2>&1 ; 
+
+            if [ $? == 0 ]; 
+            then
+              cd "$dir"
+              for subdir in */ 
+              do
+                zip -r "../zips/${dir%/}-${subdir%/}.zip" "$subdir"    
+              done
+            fi
             cd ..
           done
           rm zips/zips.zip

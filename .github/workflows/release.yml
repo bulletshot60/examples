@@ -13,11 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: |
-          shopt -s extglob
           mkdir zips
-          for dir in **/ 
+          for dir in */ 
           do
             zip -r "./zips/${dir%/}.zip" "$dir"
+            for subdir in $dir/*/ 
+            do
+              zip -r "./zips/${dir%/}-${subdir%/}.zip" "$dir/$subdir"
+            done
           done
           rm zips/zips.zip
       - name: Create Release
